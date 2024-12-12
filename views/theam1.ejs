@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Theme 1</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+      }
+
+      .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 90%;
+        height: 90vh;
+        background-color: white;
+        border: 1px solid #ccc;
+        padding: 20px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .video {
+        flex: 2;
+        height: 100%;
+      }
+
+      .video video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .number {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 10rem;
+        font-weight: bold;
+        background-color: #12a9b0; /* Your brand color */
+        color: white;
+        height: 100%;
+        text-align: center;
+      }
+
+      .image {
+        flex: 1;
+        height: 100%;
+        background-image: url('<%= systemScreen.image %>');
+        background-size: cover;
+        background-position: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="video">
+        <video autoplay muted loop>
+          <source src="https://www.google.com/search?sca_esv=99f58b8c02ec6197&sca_upv=1&sxsrf=ADLYWIJfYMfc4mTKOQ8OnOr1D3OMerGBMQ:1727156797151&q=image&udm=2&fbs=AEQNm0BcPEQzCJo6339NzIm4bfyT4bleJegbnHUzCEQFw2kdrDQIZed5WkFXD04fKofwDQwHTpSF-SiEpByCKFi5AJ8G3uRjuND9awDRnTnU9Td8oVCgFL0fvjvKb1Rckgg7o8QoAC7jU2OGkS8mtFUFsyVrgUREuV3lwe4AiY4iBdLwEAXKBQuXX5g4vhCJSHim6Ne4O81TdBW9GDilrYZ3dyLr4R4htQIfpCnwJn2SHDYlThi9wlw&sa=X&ved=2ahUKEwjciva68NqIAxXTSfEDHfe6LeAQtKgLegQIGBAB#vhid=2brKLR3s5kTpPM&vssid=mosaic" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="number">
+        <span id="lastPendingAuditor">1</span>
+      </div>
+      <div class="image"></div>
+    </div>
+
+    <script src="js/socket.js"></script>
+    <script src="js/axios.js"></script>
+    <script>
+      async function fetchLastPendingAuditor() {
+        try {
+          const response = await axios.get("http://172.20.82.220:5001/auditos/last-pending-auditor");
+          if (response.data) {
+            document.getElementById("lastPendingAuditor").innerText = response.data.sequence ?? 0;
+          }
+        } catch (error) {
+          console.error("Error fetching last pending auditor:", error);
+        }
+      }
+
+      window.onload = fetchLastPendingAuditor;
+    </script>
+  </body>
+</html>

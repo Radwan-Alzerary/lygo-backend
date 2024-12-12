@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Theme 2</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        width: 90%;
+        height: 90vh;
+        background-color: white;
+        border: 1px solid #ccc;
+        padding: 20px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .number {
+        width: 100%;
+        text-align: center;
+        background-color: #12a9b0;
+        color: white;
+        font-size: 5rem;
+        padding: 20px;
+      }
+
+      .image-video {
+        flex: 1;
+        width: 100%;
+        background-image: url('<%= systemScreen.image %>');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .image-video video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="number">
+        <span id="lastPendingAuditor">1</span>
+      </div>
+      <div class="image-video">
+        <!-- If you want to use video instead of image -->
+        <video autoplay muted loop>
+            <source src="img/c.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+    <script src="js/socket.js"></script>
+    <script src="js/axios.js"></script>
+    <script>
+      async function fetchLastPendingAuditor() {
+        try {
+          const response = await axios.get("http://your-server/auditos/last-pending-auditor");
+          if (response.data) {
+            document.getElementById("lastPendingAuditor").innerText = response.data.sequence ?? 0;
+          }
+        } catch (error) {
+          console.error("Error fetching last pending auditor:", error);
+        }
+      }
+
+      window.onload = fetchLastPendingAuditor;
+    </script>
+  </body>
+</html>
