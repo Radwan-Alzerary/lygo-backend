@@ -102,7 +102,7 @@ mongoose.connect(process.env.NODE_ENV === 'production' ? prodConnection : devCon
           "WITHDIST",
           "ASC",
         ]);
-
+        
         // Transform the result into an array of captain IDs
         return nearbyCaptains.map((captainData) => captainData[0]);
       } catch (err) {
